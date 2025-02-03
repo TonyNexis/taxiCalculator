@@ -1,7 +1,12 @@
-import styles from './HomePage.module.scss'
+import Menu from '../../components/Menu/Menu'
 
 const HomePage = () => {
-    return ()
+	return (
+		<>
+			<Menu />
+			<div>Hello World</div>
+		</>
+	)
 }
 
 export default HomePage

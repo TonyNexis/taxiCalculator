@@ -1,0 +1,15 @@
+@import './variables.scss';
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+    font-family: $base-font;
+    font-size: $base-font-size;
+    background-color: $background-color;
+    color: $base-text-color;
+    min-height: 100vh;
+}
