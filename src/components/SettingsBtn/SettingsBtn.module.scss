@@ -1,0 +1,15 @@
+@use './../../styles/variables.scss' as *;
+
+.settingsIcon {
+    position: absolute;
+    background: transparent;
+    border: none;
+    right: 20px;
+    bottom: 20px;
+    width: 2.5em;
+    height: 2.5em;
+    svg {
+        fill: $base-text-color;
+        filter: drop-shadow(0px 7px 5px rgba(0, 0, 0, 0.7));
+    }
+}
