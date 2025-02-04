@@ -1,11 +1,12 @@
-import Menu from '../../components/Menu/Menu'
+import SettingsIcon from '../../components/SettingsIcon/SettingsIcon'
+import styles from './HomePage.module.scss'
 
 const HomePage = () => {
 	return (
-		<>
-			<Menu />
-			<div>Hello World</div>
-		</>
+		<div className={styles.homePage}>
+			<button className={styles.addBtn} onClick={() => console.log('test')}>Добавити</button>
+			<SettingsIcon/>
+		</div>
 	)
 }
 
