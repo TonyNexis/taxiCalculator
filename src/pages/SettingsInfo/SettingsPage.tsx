@@ -1,36 +1,14 @@
-import InputAdornment from '@mui/material/InputAdornment'
-import { inputBaseClasses } from '@mui/material/InputBase'
-import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button';
 import styles from './SettingsPage.module.scss'
 import TextInput from '../../components/TextInput'
 
 const SettingsPage = () => {
 	return (
 		<div className={styles.settingsPage}>
-			<TextField
-				id='fuelPrice'
-				label='Вартість пального'
-				variant='outlined'
-				slotProps={{
-					input: {
-						endAdornment: (
-							<InputAdornment
-								position='end'
-								sx={{
-									opacity: 0,
-									pointerEvents: 'none',
-									[`[data-shrink=true] ~ .${inputBaseClasses.root} > &`]: {
-										opacity: 1,
-									},
-								}}
-							>
-								грн/л
-							</InputAdornment>
-						),
-					},
-				}}
-			/>
-			<TextInput id = 'tata' label = 'toto'/>
+			<p className={styles.infoText}>Збережіть вартість пального та бажану суму амортизації </p>
+			<TextInput id = 'fuel-price' label = 'Вартість пального' unitType = 'грн/л'/>
+			<TextInput id = 'depreciation' label = 'Амортизація' unitType = 'грн/км'/>
+			<Button variant="contained">Зберегти</Button>
 		</div>
 	)
 }

@@ -5,9 +5,10 @@ import TextField from '@mui/material/TextField'
 interface TextInputProps {
     id: string;
     label: string;
+    unitType: string;
   }
 
-const TextInput: React.FC<TextInputProps> = ({id, label}) => {
+const TextInput: React.FC<TextInputProps> = ({id, label, unitType}) => {
  return (
     <TextField
     id={id}
@@ -26,7 +27,7 @@ const TextInput: React.FC<TextInputProps> = ({id, label}) => {
                         },
                     }}
                 >
-                    грн/л
+                    {unitType}
                 </InputAdornment>
             ),
         },
