@@ -9,7 +9,8 @@
 html, body {
     font-family: $base-font;
     font-size: $base-font-size;
-    background-color: $background-color;
+    background: $background-color;
+    background-blend-mode: overlay;
     color: $base-text-color;
     min-height: 100vh;
 }
