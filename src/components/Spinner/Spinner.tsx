@@ -4,7 +4,7 @@ import { BounceLoader } from 'react-spinners'
 const Spinner = () => {
     return (
         <div className={styles.spinnerWrapper}>
-            <BounceLoader color='white'/>
+            <BounceLoader className={styles.spinner} color='white'/>
         </div>
     )
 }

@@ -1,12 +1,13 @@
 import SettingsBtn from '../../components/SettingsBtn/SettingsBtn'
 import styles from './HomePage.module.scss'
+import { Link } from '@tanstack/react-router'
 
 const HomePage = () => {
 	return (
 		<div className={styles.homePage}>
-			<button className={styles.addBtn} onClick={() => console.log('test')}>
+			<Link to='/addEarnings' className={styles.addBtn}>
 				Добавити
-			</button>
+			</Link>
 			<SettingsBtn />
 		</div>
 	)

@@ -12,6 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SettingsImport } from './routes/settings'
+import { Route as HistoryImport } from './routes/history'
+import { Route as AddEarningsImport } from './routes/addEarnings'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -19,6 +21,18 @@ import { Route as IndexImport } from './routes/index'
 const SettingsRoute = SettingsImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const HistoryRoute = HistoryImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AddEarningsRoute = AddEarningsImport.update({
+  id: '/addEarnings',
+  path: '/addEarnings',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,6 +53,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/addEarnings': {
+      id: '/addEarnings'
+      path: '/addEarnings'
+      fullPath: '/addEarnings'
+      preLoaderRoute: typeof AddEarningsImport
+      parentRoute: typeof rootRoute
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryImport
+      parentRoute: typeof rootRoute
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -53,36 +81,46 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/addEarnings': typeof AddEarningsRoute
+  '/history': typeof HistoryRoute
   '/settings': typeof SettingsRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/addEarnings': typeof AddEarningsRoute
+  '/history': typeof HistoryRoute
   '/settings': typeof SettingsRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/addEarnings': typeof AddEarningsRoute
+  '/history': typeof HistoryRoute
   '/settings': typeof SettingsRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/settings'
+  fullPaths: '/' | '/addEarnings' | '/history' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/settings'
-  id: '__root__' | '/' | '/settings'
+  to: '/' | '/addEarnings' | '/history' | '/settings'
+  id: '__root__' | '/' | '/addEarnings' | '/history' | '/settings'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AddEarningsRoute: typeof AddEarningsRoute
+  HistoryRoute: typeof HistoryRoute
   SettingsRoute: typeof SettingsRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AddEarningsRoute: AddEarningsRoute,
+  HistoryRoute: HistoryRoute,
   SettingsRoute: SettingsRoute,
 }
 
@@ -97,11 +135,19 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/addEarnings",
+        "/history",
         "/settings"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/addEarnings": {
+      "filePath": "addEarnings.tsx"
+    },
+    "/history": {
+      "filePath": "history.tsx"
     },
     "/settings": {
       "filePath": "settings.tsx"
