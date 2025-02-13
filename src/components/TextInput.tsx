@@ -6,13 +6,15 @@ interface TextInputProps {
     id: string;
     label: string;
     unitType: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   }
 
-const TextInput: React.FC<TextInputProps> = ({id, label, unitType}) => {
+const TextInput: React.FC<TextInputProps> = ({id, label, unitType, onChange}) => {
  return (
     <TextField
     id={id}
     label={label}
+    onChange={onChange}
     variant='outlined'
     slotProps={{
         input: {
