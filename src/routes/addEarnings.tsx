@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import TextInput from '../components/TextInput'
 import Button from '@mui/material/Button';
 import styles from './../styles/addEarningsPage.module.scss'
+import './../styles/global.scss'
 import { useState } from 'react'
 
 export const Route = createFileRoute('/addEarnings')({
@@ -19,6 +20,7 @@ function RouteComponent() {
   }
 
   return <div className={styles.addEarningsWrapper}>
+      <p className='infoText'>Введіть дані </p>
       <TextInput onChange={(e) => setMileage(e.target.value)} id='mileage' label='Пробіг' unitType='км'/>
       <TextInput onChange={(e) => setConsumption(e.target.value)} id='consumpion' label='Витрати' unitType='л/100км'/>
       <TextInput onChange={(e) => setTime(e.target.value)} id='time' label='Час' unitType='год'/>
