@@ -1,7 +1,7 @@
 import InputAdornment from '@mui/material/InputAdornment'
 import { inputBaseClasses } from '@mui/material/InputBase'
 import TextField from '@mui/material/TextField'
-import { forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 
 interface TextInputProps {
 	id: string
@@ -11,31 +11,30 @@ interface TextInputProps {
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-	({ id, label, unitType, onChange }, ref) => {
+	({ id, label, unitType, onChange, ...props }, ref) => {
 		return (
 			<TextField
 				id={id}
 				label={label}
 				onChange={onChange}
 				variant='outlined'
-				inputRef={ref} 
-				slotProps={{
-					input: {
-						endAdornment: (
-							<InputAdornment
-								position='end'
-								sx={{
-									opacity: 0,
-									pointerEvents: 'none',
-									[`[data-shrink=true] ~ .${inputBaseClasses.root} > &`]: {
-										opacity: 1,
-									},
-								}}
-							>
-								{unitType}
-							</InputAdornment>
-						),
-					},
+				inputRef={ref}
+				{...props}
+				InputProps={{
+					endAdornment: (
+						<InputAdornment
+							position='end'
+							sx={{
+								opacity: 0,
+								pointerEvents: 'none',
+								[`[data-shrink=true] ~ .${inputBaseClasses.root} > &`]: {
+									opacity: 1,
+								},
+							}}
+						>
+							{unitType}
+						</InputAdornment>
+					),
 				}}
 			/>
 		)
