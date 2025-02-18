@@ -24,33 +24,44 @@ const SettingsPage = () => {
 				Збережіть вартість пального та бажану суму амортизації
 			</p>
 
-			<TextInput
-				{...register('fuelPrice', {
-					required: 'Вкажіть вартість пального',
-					valueAsNumber: true,
-					min: { value: 0, message: 'Мінімальне значення 0' },
-				})}
-				id='fuel-price'
-				label='Вартість пального'
-				unitType='грн/л'
-			/>
-			{errors.fuelPrice && (
-				<span className={styles.error}>{errors.fuelPrice.message}</span>
-			)}
-
-			<TextInput
-				{...register('depreciation', {
-					required: 'Вкажіть амортизацію',
-					valueAsNumber: true,
-					min: { value: 0, message: 'Мінімальне значення 0' },
-				})}
-				id='depreciation'
-				label='Амортизація'
-				unitType='грн/км'
-			/>
-			{errors.depreciation && (
-				<span className={styles.error}>{errors.depreciation.message}</span>
-			)}
+			<div className={styles.fieldWrapper}>
+				<TextInput
+					{...register('fuelPrice', {
+						required: 'Вкажіть вартість пального',
+						pattern: {
+							value: /^[0-9]*\.?[0-9]+$/,
+							message: 'Введіть коректне число',
+						},
+					})}
+					id='fuel-price'
+					label='Вартість пального'
+					unitType='грн/л'
+				/>
+				{errors.fuelPrice && (
+					<span className={styles.errorMessage}>
+						{errors.fuelPrice.message}
+					</span>
+				)}
+			</div>
+			<div className={styles.fieldWrapper}>
+				<TextInput
+					{...register('depreciation', {
+						required: 'Вкажіть амортизацію',
+						pattern: {
+							value: /^[0-9]*\.?[0-9]+$/,
+							message: 'Введіть коректне число',
+						},
+					})}
+					id='depreciation'
+					label='Амортизація'
+					unitType='грн/км'
+				/>
+				{errors.depreciation && (
+					<span className={styles.errorMessage}>
+						{errors.depreciation.message}
+					</span>
+				)}
+			</div>
 
 			<Button type='submit' variant='contained'>
 				Зберегти
