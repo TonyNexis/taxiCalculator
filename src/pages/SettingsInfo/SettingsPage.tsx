@@ -1,3 +1,5 @@
+
+import useStore from '../../store/useSettingsStore'
 import Button from '@mui/material/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import TextInput from '../../components/TextInput'
@@ -16,13 +18,17 @@ const SettingsPage = () => {
 		formState: { errors },
 	} = useForm<Inputs>()
 
-	const onSubmit: SubmitHandler<Inputs> = data => console.log(data)
+	const { settings, updateSettings } = useStore()
+
+
+	const onSubmit: SubmitHandler<Inputs> = data => updateSettings(data)
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className={styles.settingsPage}>
 			<p className='infoText'>
 				Збережіть вартість пального та бажану суму амортизації
 			</p>
+			<div>{settings.depreciation}</div>
 
 			<div className={styles.fieldWrapper}>
 				<TextInput
