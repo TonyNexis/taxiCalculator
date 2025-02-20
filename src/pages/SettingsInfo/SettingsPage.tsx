@@ -24,12 +24,16 @@ const SettingsPage = () => {
 	const onSubmit: SubmitHandler<Inputs> = data => updateSettings(data)
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className={styles.settingsPage}>
+		<div className={styles.settingsPage}>
+			<div className={styles.settingsInfo}>
+
+				<p>Вартість пального: </p><p>{settings.fuelPrice} грн/л</p>
+				<p>Амортизація: </p> <p>{settings.depreciation} грн</p>
+			</div>
+		<form onSubmit={handleSubmit(onSubmit)} className={styles.settingsPageForm}>
 			<p className='infoText'>
 				Збережіть вартість пального та бажану суму амортизації
 			</p>
-			<div>{settings.depreciation}</div>
-
 			<div className={styles.fieldWrapper}>
 				<TextInput
 					{...register('fuelPrice', {
@@ -73,6 +77,7 @@ const SettingsPage = () => {
 				Зберегти
 			</Button>
 		</form>
+		</div>
 	)
 }
 
