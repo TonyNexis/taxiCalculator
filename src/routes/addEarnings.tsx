@@ -22,7 +22,7 @@ function RouteComponent() {
   return <div className={styles.addEarningsWrapper}>
       <p className='infoText'>Введіть дані </p>
       <TextInput onChange={(e) => setMileage(e.target.value)} id='mileage' label='Пробіг' unitType='км'/>
-      <TextInput onChange={(e) => setConsumption(e.target.value)} id='consumpion' label='Витрати' unitType='л/100км'/>
+      <TextInput onChange={(e) => setConsumption(e.target.value)} id='consumpion' label='Витрати пального' unitType='л/100км'/>
       <TextInput onChange={(e) => setTime(e.target.value)} id='time' label='Час' unitType='год'/>
       <TextInput onChange={(e) => setEarnings(e.target.value)} id='earnings' label='Заробіток' unitType='грн'/>
       <Button onClick={calcSalary} variant="contained">Порахувати</Button>
