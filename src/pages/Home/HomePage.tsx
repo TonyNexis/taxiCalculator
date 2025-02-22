@@ -1,21 +1,21 @@
 import { Link } from '@tanstack/react-router'
-import useStore from '../../store/useSettingsStore'
+import useStore from '../../store/useEarningsStore.ts'
 import SettingsBtn from '../../components/SettingsBtn/SettingsBtn'
 import styles from './HomePage.module.scss'
 
 const HomePage = () => {
-	const { settings } = useStore();
+	const { earnings } = useStore();
 
 	return (
 		<div className={styles.homePage}>
 			<div className={styles.results}>
 				<div className={styles.resultsBlock}>
 					<p>Пробіг:</p>
-					<p>0 км</p>
+					<p>{earnings.mileage} км</p>
 					<p>Витрати пального:</p>
-					<p>0 л/100км</p>
-					<p>Час:</p> <p>0 год</p>
-					<p>Заробіток:</p> <p>0 грн</p>
+					<p>{earnings.fuelConsumption} л/100км</p>
+					<p>Час:</p> <p>{earnings.timeSpent} год</p>
+					<p>Заробіток:</p> <p>{earnings.earnings} грн</p>
 				</div>
 				<div className={styles.resultsBlock}>
 					<p>Вартість пального:</p> <p>0 грн</p>

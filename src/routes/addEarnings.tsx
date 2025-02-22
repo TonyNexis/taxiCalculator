@@ -1,30 +1,119 @@
-import { createFileRoute } from '@tanstack/react-router'
+import Button from '@mui/material/Button'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import TextInput from '../components/TextInput'
-import Button from '@mui/material/Button';
+import useStore from '../store/useEarningsStore'
 import styles from './../styles/addEarningsPage.module.scss'
 import './../styles/global.scss'
-import { useState } from 'react'
 
 export const Route = createFileRoute('/addEarnings')({
-  component: RouteComponent,
+	component: RouteComponent,
 })
 
+type Inputs = {
+	mileage: number
+	fuelConsumption: number
+	timeSpent: number
+	earnings: number
+}
+
 function RouteComponent() {
-  const [mileage, setMileage] = useState('')
-  const [consumption, setConsumption] = useState('')
-  const [time, setTime] = useState('')
-  const [earnings, setEarnings] = useState('')
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<Inputs>()
 
-  const calcSalary = () => {
-   console.log(time)
-  }
+	const navigate = useNavigate()
 
-  return <div className={styles.addEarningsWrapper}>
-      <p className='infoText'>Введіть дані </p>
-      <TextInput onChange={(e) => setMileage(e.target.value)} id='mileage' label='Пробіг' unitType='км'/>
-      <TextInput onChange={(e) => setConsumption(e.target.value)} id='consumpion' label='Витрати пального' unitType='л/100км'/>
-      <TextInput onChange={(e) => setTime(e.target.value)} id='time' label='Час' unitType='год'/>
-      <TextInput onChange={(e) => setEarnings(e.target.value)} id='earnings' label='Заробіток' unitType='грн'/>
-      <Button onClick={calcSalary} variant="contained">Порахувати</Button>
-      </div>
+	const { addEarnings } = useStore()
+
+	const onSubmit: SubmitHandler<Inputs> = data => {
+		addEarnings(data)
+		navigate({ to: '/' })
+	}
+
+	return (
+		<form
+			onSubmit={handleSubmit(onSubmit)}
+			className={styles.addEarningsWrapper}
+		>
+			<p className='infoText'>Введіть дані </p>
+			<div className={styles.fieldWrapper}>
+				<TextInput
+					{...register('mileage', {
+						required: 'Вкажіть пробіг',
+						pattern: {
+							value: /^[0-9]*\.?[0-9]+$/,
+							message: 'Введіть коректне число',
+						},
+					})}
+					id='mileage'
+					label='Пробіг'
+					unitType='км'
+				/>
+				{errors.mileage && (
+					<span className={styles.errorMessage}>{errors.mileage.message}</span>
+				)}
+			</div>
+			<div className={styles.fieldWrapper}>
+				<TextInput
+					{...register('fuelConsumption', {
+						required: 'Вкажіть витрати пального',
+						pattern: {
+							value: /^[0-9]*\.?[0-9]+$/,
+							message: 'Введіть коректне число',
+						},
+					})}
+					id='fuelConsumption'
+					label='Витрати пального'
+					unitType='л/100км'
+				/>
+				{errors.fuelConsumption && (
+					<span className={styles.errorMessage}>
+						{errors.fuelConsumption.message}
+					</span>
+				)}
+			</div>
+			<div className={styles.fieldWrapper}>
+				<TextInput
+					{...register('timeSpent', {
+						required: 'Вкажіть час',
+						pattern: {
+							value: /^[0-9]*\.?[0-9]+$/,
+							message: 'Введіть коректне число',
+						},
+					})}
+					id='timeSpent'
+					label='Час'
+					unitType='год'
+				/>
+				{errors.timeSpent && (
+					<span className={styles.errorMessage}>
+						{errors.timeSpent.message}
+					</span>
+				)}
+			</div>
+			<div className={styles.fieldWrapper}>
+				<TextInput
+					{...register('earnings', {
+						required: 'Вкажіть ваш заробіток',
+						pattern: {
+							value: /^[0-9]*\.?[0-9]+$/,
+							message: 'Введіть коректне число',
+						},
+					})}
+					id='earnings'
+					label='Заробіток'
+					unitType='грн'
+				/>
+				{errors.earnings && (
+					<span className={styles.errorMessage}>{errors.earnings.message}</span>
+				)}
+			</div>
+			<Button type='submit' variant='contained'>
+				Порахувати
+			</Button>
+		</form>
+	)
 }
