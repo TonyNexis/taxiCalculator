@@ -11,7 +11,7 @@ type Store = {
 	updateSettings: (newSettings: Partial<Settings>) => void
 }
 
-const useStore = create<Store>()(
+const useSettingsStore = create<Store>()(
 	devtools(
 		set => ({
 			settings: {
@@ -27,4 +27,4 @@ const useStore = create<Store>()(
 	)
 )
 
-export default useStore
+export default useSettingsStore

@@ -2,7 +2,7 @@ import Button from '@mui/material/Button'
 import { useNavigate } from '@tanstack/react-router'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import TextInput from '../../components/TextInput'
-import useStore from '../../store/useSettingsStore'
+import useSettingsStore from '../../store/useSettingsStore'
 import '../../styles/global.scss'
 import styles from './SettingsPage.module.scss'
 
@@ -20,7 +20,7 @@ const SettingsPage = () => {
 
 	const navigate = useNavigate()
 
-	const { settings, updateSettings } = useStore()
+	const { settings, updateSettings } = useSettingsStore()
 
 	const onSubmit: SubmitHandler<Inputs> = data => {
 		updateSettings(data)

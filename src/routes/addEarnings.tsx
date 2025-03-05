@@ -1,8 +1,9 @@
 import Button from '@mui/material/Button'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import TextInput from '../components/TextInput'
-import useStore from '../store/useEarningsStore'
+import useEarningsStore from '../store/useEarningsStore'
 import styles from './../styles/addEarningsPage.module.scss'
 import './../styles/global.scss'
 
@@ -22,11 +23,21 @@ function RouteComponent() {
 		register,
 		handleSubmit,
 		formState: { errors },
+		setValue,
 	} = useForm<Inputs>()
 
 	const navigate = useNavigate()
 
-	const { addEarnings } = useStore()
+	const { addEarnings, earnings } = useEarningsStore()
+
+	useEffect(() => {
+		if (earnings.earnings > 0) {
+			setValue('mileage', earnings.mileage)
+			setValue('fuelConsumption', earnings.fuelConsumption)
+			setValue('timeSpent', earnings.timeSpent)
+			setValue('earnings', earnings.earnings)
+		}
+	}, [earnings, setValue])
 
 	const onSubmit: SubmitHandler<Inputs> = data => {
 		addEarnings(data)
@@ -78,7 +89,6 @@ function RouteComponent() {
 			<div className={styles.fieldWrapper}>
 				<TextInput
 					{...register('timeSpent', {
-						required: 'Вкажіть час',
 						pattern: {
 							value: /^[0-9]*\.?[0-9]+$/,
 							message: 'Введіть коректне число',
@@ -99,7 +109,7 @@ function RouteComponent() {
 					{...register('earnings', {
 						required: 'Вкажіть ваш заробіток',
 						pattern: {
-							value: /^[0-9]*\.?[0-9]+$/,
+							value: /^[1-9][0-9]*\.?[0-9]+$/,
 							message: 'Введіть коректне число',
 						},
 					})}
