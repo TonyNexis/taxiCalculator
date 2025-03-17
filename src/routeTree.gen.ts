@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SettingsImport } from './routes/settings'
 import { Route as HistoryImport } from './routes/history'
+import { Route as AuthFormImport } from './routes/authForm'
 import { Route as AddEarningsImport } from './routes/addEarnings'
 import { Route as IndexImport } from './routes/index'
 
@@ -27,6 +28,12 @@ const SettingsRoute = SettingsImport.update({
 const HistoryRoute = HistoryImport.update({
   id: '/history',
   path: '/history',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthFormRoute = AuthFormImport.update({
+  id: '/authForm',
+  path: '/authForm',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AddEarningsImport
       parentRoute: typeof rootRoute
     }
+    '/authForm': {
+      id: '/authForm'
+      path: '/authForm'
+      fullPath: '/authForm'
+      preLoaderRoute: typeof AuthFormImport
+      parentRoute: typeof rootRoute
+    }
     '/history': {
       id: '/history'
       path: '/history'
@@ -82,6 +96,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/addEarnings': typeof AddEarningsRoute
+  '/authForm': typeof AuthFormRoute
   '/history': typeof HistoryRoute
   '/settings': typeof SettingsRoute
 }
@@ -89,6 +104,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/addEarnings': typeof AddEarningsRoute
+  '/authForm': typeof AuthFormRoute
   '/history': typeof HistoryRoute
   '/settings': typeof SettingsRoute
 }
@@ -97,22 +113,24 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/addEarnings': typeof AddEarningsRoute
+  '/authForm': typeof AuthFormRoute
   '/history': typeof HistoryRoute
   '/settings': typeof SettingsRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/addEarnings' | '/history' | '/settings'
+  fullPaths: '/' | '/addEarnings' | '/authForm' | '/history' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/addEarnings' | '/history' | '/settings'
-  id: '__root__' | '/' | '/addEarnings' | '/history' | '/settings'
+  to: '/' | '/addEarnings' | '/authForm' | '/history' | '/settings'
+  id: '__root__' | '/' | '/addEarnings' | '/authForm' | '/history' | '/settings'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddEarningsRoute: typeof AddEarningsRoute
+  AuthFormRoute: typeof AuthFormRoute
   HistoryRoute: typeof HistoryRoute
   SettingsRoute: typeof SettingsRoute
 }
@@ -120,6 +138,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddEarningsRoute: AddEarningsRoute,
+  AuthFormRoute: AuthFormRoute,
   HistoryRoute: HistoryRoute,
   SettingsRoute: SettingsRoute,
 }
@@ -136,6 +155,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/addEarnings",
+        "/authForm",
         "/history",
         "/settings"
       ]
@@ -145,6 +165,9 @@ export const routeTree = rootRoute
     },
     "/addEarnings": {
       "filePath": "addEarnings.tsx"
+    },
+    "/authForm": {
+      "filePath": "authForm.tsx"
     },
     "/history": {
       "filePath": "history.tsx"

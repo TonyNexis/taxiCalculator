@@ -6,12 +6,13 @@ import React, { forwardRef } from 'react'
 interface TextInputProps {
 	id: string
 	label: string
-	unitType: string
+	unitType?: string
+	type?: string
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-	({ id, label, unitType, onChange, ...props }, ref) => {
+	({ id, label, unitType, onChange, type, ...props }, ref) => {
 		return (
 			<TextField
 				id={id}
@@ -19,6 +20,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
 				onChange={onChange}
 				variant='outlined'
 				inputRef={ref}
+				type={type}
 				{...props}
 				InputProps={{
 					endAdornment: (
