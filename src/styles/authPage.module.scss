@@ -1,7 +1,18 @@
 .authPageWrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	gap: 50px;
+	align-items: center;
+	.fieldWrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.errorMessage {
+			color: rgb(234, 21, 21);
+			position: absolute;
+			bottom: -30px;
+		}
+	}
 }

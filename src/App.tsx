@@ -9,7 +9,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-    <Menu/>
+    {/* <Menu/> */}
     {/* <HomePage/> */}
     <SettingsPage/>
     </ThemeProvider>
