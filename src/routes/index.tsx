@@ -28,17 +28,17 @@ function RouteComponent() {
 		setError('')
 		try {
 			const loggedUser = await login(data.email, data.password)
-			console.log('success', loggedUser)
+			console.log('success', loggedUser)	
 		} catch {
 			setError('Невірний email або пароль')
 		}
 	}
 
 	return (
-		<>
+		<div className={styles.authPageWrapper}>
 			<form
 				onSubmit={handleSubmit(onSubmit)}
-				className={styles.authPageWrapper}
+				className={styles.authForm}
 			>
 				<h1>Login</h1>
 				<div className={styles.fieldWrapper}>
@@ -79,6 +79,6 @@ function RouteComponent() {
 				</Button>
 			{error && <span className={styles.errorMessage}>{error}</span>}
 			</form>
-		</>
+		</div>
 	)
 }

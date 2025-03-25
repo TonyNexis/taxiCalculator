@@ -1,18 +1,27 @@
 .authPageWrapper {
 	display: flex;
 	justify-content: center;
-	flex-direction: column;
-	gap: 50px;
 	align-items: center;
-	.fieldWrapper {
-		position: relative;
+	height: 100vh;
+	.authForm {
 		display: flex;
-		align-items: center;
 		justify-content: center;
+		flex-direction: column;
+		gap: 50px;
+		align-items: center;
+		position: relative;
 		.errorMessage {
 			color: rgb(234, 21, 21);
 			position: absolute;
 			bottom: -30px;
 		}
+		.fieldWrapper {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+	
+		}
 	}
+	
 }
