@@ -2,39 +2,61 @@
 
 .menu {
     display: flex;
-    flex-direction: row;
     justify-content: center;
     box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
     background: #262A33;
 
+    .logoutButton {
+        background-color: transparent;
+        // width: 100px;
+        border: none;
+        opacity: 0.5;
+        position: absolute;
+        right: 0;
+        top: 60px;
 
-    .menu__item {
-        position: relative;
+        svg {
+            width: 54px;
+            // height: 80px;
+            padding: 10px;
+            fill: $base-text-color;
+            background-color: transparent;
+        }
+    }
+
+
+    .menu__items {
+        display: flex;
         flex: 1;
-        color: $base-text-color;
-        padding: 20px;
-        text-decoration: none;
-        text-transform: uppercase;
-        text-align: center;
-        font-weight: 700;
-        letter-spacing: 3px;
 
-        &::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 50%;
-            background-color: $base-text-color;
+        .menu__item {
+            position: relative;
+            flex: 1;
+            color: $base-text-color;
+            padding: 20px;
+            text-decoration: none;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 3px;
+    
+            &::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1px;
+                height: 50%;
+                background-color: $base-text-color;
+            }
+    
+            &:last-child::after {
+                display: none;
+            }
+    
         }
-
-        &:last-child::after {
-            display: none;
-        }
-
     }
 }
 

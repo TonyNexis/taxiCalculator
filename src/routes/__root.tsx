@@ -4,6 +4,7 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import Spinner from '../components/Spinner/Spinner'
 import { useEffect, useState } from 'react'
 import { auth } from '../firebase/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 
 export const Route = createRootRoute({
 	component: RootLayout,
@@ -15,6 +16,14 @@ function RootLayout() {
 	const [showSpinner, setShowSpinner] = useState(false)
 
 	const [user, setUser] = useState(() => auth.currentUser)
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, user => {
+			setUser(user)
+		})
+
+		return () => unsubscribe()
+	}, [])
 
 	useEffect(() => {
 		let timeout: number
