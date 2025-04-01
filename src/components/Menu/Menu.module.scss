@@ -7,25 +7,6 @@
     margin-bottom: 20px;
     background: #262A33;
 
-    .logoutButton {
-        background-color: transparent;
-        // width: 100px;
-        border: none;
-        opacity: 0.5;
-        position: absolute;
-        right: 0;
-        top: 60px;
-
-        svg {
-            width: 54px;
-            // height: 80px;
-            padding: 10px;
-            fill: $base-text-color;
-            background-color: transparent;
-        }
-    }
-
-
     .menu__items {
         display: flex;
         flex: 1;

@@ -5,6 +5,7 @@ import Spinner from '../components/Spinner/Spinner'
 import { useEffect, useState } from 'react'
 import { auth } from '../firebase/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
+import { SettingsMenu } from '../components/SettingsMenu/SettingsMenu'
 
 export const Route = createRootRoute({
 	component: RootLayout,
@@ -40,6 +41,7 @@ function RootLayout() {
 	return (
 		<>
 		{user && <Menu/>}
+		{user && <SettingsMenu/>}
 		{showSpinner && <Spinner/> }
 		<Outlet />
 		<TanStackRouterDevtools />

@@ -12,8 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SettingsImport } from './routes/settings'
+import { Route as HomeImport } from './routes/home'
 import { Route as HistoryImport } from './routes/history'
-import { Route as AuthFormImport } from './routes/authForm'
 import { Route as AddEarningsImport } from './routes/addEarnings'
 import { Route as IndexImport } from './routes/index'
 
@@ -25,15 +25,15 @@ const SettingsRoute = SettingsImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const HistoryRoute = HistoryImport.update({
-  id: '/history',
-  path: '/history',
+const HomeRoute = HomeImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthFormRoute = AuthFormImport.update({
-  id: '/authForm',
-  path: '/authForm',
+const HistoryRoute = HistoryImport.update({
+  id: '/history',
+  path: '/history',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,18 +67,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AddEarningsImport
       parentRoute: typeof rootRoute
     }
-    '/authForm': {
-      id: '/authForm'
-      path: '/authForm'
-      fullPath: '/authForm'
-      preLoaderRoute: typeof AuthFormImport
-      parentRoute: typeof rootRoute
-    }
     '/history': {
       id: '/history'
       path: '/history'
       fullPath: '/history'
       preLoaderRoute: typeof HistoryImport
+      parentRoute: typeof rootRoute
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeImport
       parentRoute: typeof rootRoute
     }
     '/settings': {
@@ -96,16 +96,16 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/addEarnings': typeof AddEarningsRoute
-  '/authForm': typeof AuthFormRoute
   '/history': typeof HistoryRoute
+  '/home': typeof HomeRoute
   '/settings': typeof SettingsRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/addEarnings': typeof AddEarningsRoute
-  '/authForm': typeof AuthFormRoute
   '/history': typeof HistoryRoute
+  '/home': typeof HomeRoute
   '/settings': typeof SettingsRoute
 }
 
@@ -113,33 +113,33 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/addEarnings': typeof AddEarningsRoute
-  '/authForm': typeof AuthFormRoute
   '/history': typeof HistoryRoute
+  '/home': typeof HomeRoute
   '/settings': typeof SettingsRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/addEarnings' | '/authForm' | '/history' | '/settings'
+  fullPaths: '/' | '/addEarnings' | '/history' | '/home' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/addEarnings' | '/authForm' | '/history' | '/settings'
-  id: '__root__' | '/' | '/addEarnings' | '/authForm' | '/history' | '/settings'
+  to: '/' | '/addEarnings' | '/history' | '/home' | '/settings'
+  id: '__root__' | '/' | '/addEarnings' | '/history' | '/home' | '/settings'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddEarningsRoute: typeof AddEarningsRoute
-  AuthFormRoute: typeof AuthFormRoute
   HistoryRoute: typeof HistoryRoute
+  HomeRoute: typeof HomeRoute
   SettingsRoute: typeof SettingsRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddEarningsRoute: AddEarningsRoute,
-  AuthFormRoute: AuthFormRoute,
   HistoryRoute: HistoryRoute,
+  HomeRoute: HomeRoute,
   SettingsRoute: SettingsRoute,
 }
 
@@ -155,8 +155,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/addEarnings",
-        "/authForm",
         "/history",
+        "/home",
         "/settings"
       ]
     },
@@ -166,11 +166,11 @@ export const routeTree = rootRoute
     "/addEarnings": {
       "filePath": "addEarnings.tsx"
     },
-    "/authForm": {
-      "filePath": "authForm.tsx"
-    },
     "/history": {
       "filePath": "history.tsx"
+    },
+    "/home": {
+      "filePath": "home.tsx"
     },
     "/settings": {
       "filePath": "settings.tsx"

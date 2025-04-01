@@ -21,11 +21,6 @@ const Menu = () => {
 					Історія
 				</Link>
 			</div>
-			<button className={styles.logoutButton}>
-				<svg viewBox='0 0 24 24'>
-					<path d='M16 13v-2h-5V8l-5 4 5 4v-3h5zM20 3H9a2 2 0 0 0-2 2v4h2V5h11v14H9v-4H7v4a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z' />
-				</svg>
-			</button>
 		</nav>
 	)
 }
