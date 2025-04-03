@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@emotion/styled": "^11.14.0",
-    "@mui/material": "^6.4.2",
+    "@mui/icons-material": "^7.0.1",
+    "@mui/material": "^7.0.1",
     "@tanstack/react-router": "^1.102.1",
     "firebase": "^11.4.0",
     "react": "^18.3.1",

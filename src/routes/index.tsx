@@ -7,7 +7,6 @@ import { login } from '../firebase/authService'
 import { auth } from '../firebase/firebase'
 import styles from './../styles/authPage.module.scss'
 
-
 export const Route = createFileRoute('/')({
 	beforeLoad: () =>
 		new Promise<void>(resolve => {

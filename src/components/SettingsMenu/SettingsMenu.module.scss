@@ -1,0 +1,22 @@
+@use './../../styles/variables.scss' as *;
+
+.settingsMenu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    .icon {
+        font-size: 30px;
+        color: $base-text-color;
+    }
+    .menuIcon {
+        background-color: transparent;
+        border: none;
+    
+    }
+}

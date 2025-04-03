@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import SettingsBtn from '../../components/SettingsBtn/SettingsBtn'
 import useEarningsStore from '../../store/useEarningsStore.ts'
 import styles from './HomePage.module.scss'
 
@@ -41,7 +40,6 @@ const HomePage = () => {
 			<Link to='/addEarnings' className={styles.addBtn}>
 				Добавити
 			</Link>
-			<SettingsBtn />
 		</div>
 	)
 }
