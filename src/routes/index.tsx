@@ -1,21 +1,24 @@
 import Button from '@mui/material/Button'
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, useNavigate, redirect } from '@tanstack/react-router'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import TextInput from '../components/TextInput'
 import { login } from '../firebase/authService'
 import { auth } from '../firebase/firebase'
-import styles from './../styles/authPage.module.scss'
+import styles from './../styles/index.module.scss'
 
 export const Route = createFileRoute('/')({
 	beforeLoad: () =>
-		new Promise<void>(resolve => {
-			auth.onAuthStateChanged(user => {
+		new Promise((resolve) => {
+			const unsubscribe = auth.onAuthStateChanged((user) => {
+				unsubscribe()
 				if (user) {
-					resolve()
+					resolve(redirect({ to: '/home' }))
+				} else {
+					resolve(undefined)
 				}
 			})
-		}).then(() => redirect({ to: '/home' })),
+		}),
 	component: RouteComponent,
 })
 
@@ -27,6 +30,8 @@ type Inputs = {
 function RouteComponent() {
 	const [error, setError] = useState('')
 
+	const navigate = useNavigate()
+
 	const {
 		register,
 		handleSubmit,
@@ -37,7 +42,12 @@ function RouteComponent() {
 		setError('')
 		try {
 			const loggedUser = await login(data.email, data.password)
-			console.log('success', loggedUser)
+			if (loggedUser) {
+				navigate({ to: '/home' })
+				console.log('success') 
+			} else {
+				setError('Щось пішло не так. Спробуйте ще раз.')
+			}
 		} catch {
 			setError('Невірний email або пароль')
 		}

@@ -11,35 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SettingsImport } from './routes/settings'
-import { Route as HomeImport } from './routes/home'
-import { Route as HistoryImport } from './routes/history'
-import { Route as AddEarningsImport } from './routes/addEarnings'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthenticatedSettingsImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedHomeImport } from './routes/_authenticated/home'
+import { Route as AuthenticatedHistoryImport } from './routes/_authenticated/history'
+import { Route as AuthenticatedAddEarningsImport } from './routes/_authenticated/addEarnings'
 
 // Create/Update Routes
 
-const SettingsRoute = SettingsImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const HomeRoute = HomeImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const HistoryRoute = HistoryImport.update({
-  id: '/history',
-  path: '/history',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AddEarningsRoute = AddEarningsImport.update({
-  id: '/addEarnings',
-  path: '/addEarnings',
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -47,6 +29,30 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedSettingsRoute = AuthenticatedSettingsImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedHomeRoute = AuthenticatedHomeImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedHistoryRoute = AuthenticatedHistoryImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedAddEarningsRoute = AuthenticatedAddEarningsImport.update({
+  id: '/addEarnings',
+  path: '/addEarnings',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -60,87 +66,116 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/addEarnings': {
-      id: '/addEarnings'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedImport
+      parentRoute: typeof rootRoute
+    }
+    '/_authenticated/addEarnings': {
+      id: '/_authenticated/addEarnings'
       path: '/addEarnings'
       fullPath: '/addEarnings'
-      preLoaderRoute: typeof AddEarningsImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedAddEarningsImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/history': {
-      id: '/history'
+    '/_authenticated/history': {
+      id: '/_authenticated/history'
       path: '/history'
       fullPath: '/history'
-      preLoaderRoute: typeof HistoryImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedHistoryImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/home': {
-      id: '/home'
+    '/_authenticated/home': {
+      id: '/_authenticated/home'
       path: '/home'
       fullPath: '/home'
-      preLoaderRoute: typeof HomeImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedHomeImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/settings': {
-      id: '/settings'
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof SettingsImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedSettingsImport
+      parentRoute: typeof AuthenticatedImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedAddEarningsRoute: typeof AuthenticatedAddEarningsRoute
+  AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
+  AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAddEarningsRoute: AuthenticatedAddEarningsRoute,
+  AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
+  AuthenticatedHomeRoute: AuthenticatedHomeRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/addEarnings': typeof AddEarningsRoute
-  '/history': typeof HistoryRoute
-  '/home': typeof HomeRoute
-  '/settings': typeof SettingsRoute
+  '': typeof AuthenticatedRouteWithChildren
+  '/addEarnings': typeof AuthenticatedAddEarningsRoute
+  '/history': typeof AuthenticatedHistoryRoute
+  '/home': typeof AuthenticatedHomeRoute
+  '/settings': typeof AuthenticatedSettingsRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/addEarnings': typeof AddEarningsRoute
-  '/history': typeof HistoryRoute
-  '/home': typeof HomeRoute
-  '/settings': typeof SettingsRoute
+  '': typeof AuthenticatedRouteWithChildren
+  '/addEarnings': typeof AuthenticatedAddEarningsRoute
+  '/history': typeof AuthenticatedHistoryRoute
+  '/home': typeof AuthenticatedHomeRoute
+  '/settings': typeof AuthenticatedSettingsRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/addEarnings': typeof AddEarningsRoute
-  '/history': typeof HistoryRoute
-  '/home': typeof HomeRoute
-  '/settings': typeof SettingsRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_authenticated/addEarnings': typeof AuthenticatedAddEarningsRoute
+  '/_authenticated/history': typeof AuthenticatedHistoryRoute
+  '/_authenticated/home': typeof AuthenticatedHomeRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/addEarnings' | '/history' | '/home' | '/settings'
+  fullPaths: '/' | '' | '/addEarnings' | '/history' | '/home' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/addEarnings' | '/history' | '/home' | '/settings'
-  id: '__root__' | '/' | '/addEarnings' | '/history' | '/home' | '/settings'
+  to: '/' | '' | '/addEarnings' | '/history' | '/home' | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_authenticated/addEarnings'
+    | '/_authenticated/history'
+    | '/_authenticated/home'
+    | '/_authenticated/settings'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AddEarningsRoute: typeof AddEarningsRoute
-  HistoryRoute: typeof HistoryRoute
-  HomeRoute: typeof HomeRoute
-  SettingsRoute: typeof SettingsRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AddEarningsRoute: AddEarningsRoute,
-  HistoryRoute: HistoryRoute,
-  HomeRoute: HomeRoute,
-  SettingsRoute: SettingsRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -154,26 +189,36 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/addEarnings",
-        "/history",
-        "/home",
-        "/settings"
+        "/_authenticated"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/addEarnings": {
-      "filePath": "addEarnings.tsx"
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/addEarnings",
+        "/_authenticated/history",
+        "/_authenticated/home",
+        "/_authenticated/settings"
+      ]
     },
-    "/history": {
-      "filePath": "history.tsx"
+    "/_authenticated/addEarnings": {
+      "filePath": "_authenticated/addEarnings.tsx",
+      "parent": "/_authenticated"
     },
-    "/home": {
-      "filePath": "home.tsx"
+    "/_authenticated/history": {
+      "filePath": "_authenticated/history.tsx",
+      "parent": "/_authenticated"
     },
-    "/settings": {
-      "filePath": "settings.tsx"
+    "/_authenticated/home": {
+      "filePath": "_authenticated/home.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/settings": {
+      "filePath": "_authenticated/settings.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

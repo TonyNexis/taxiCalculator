@@ -10,7 +10,7 @@ export const SettingsMenu = () => {
     const handleLogout = async () => {
         try {
             await logout()
-            navigate('/settings')
+            navigate({to: '/'})
         } catch (error) {
             console.log(error)
         }
