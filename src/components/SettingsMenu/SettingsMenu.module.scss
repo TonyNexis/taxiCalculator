@@ -1,7 +1,7 @@
 @use './../../styles/variables.scss' as *;
 
 .settingsMenu {
-	position: absolute;
+	position: fixed;
 	display: flex;
 	flex-direction: column;
 	bottom: 10px;
