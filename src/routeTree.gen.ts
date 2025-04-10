@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as RegisterImport } from './routes/register'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthenticatedSettingsImport } from './routes/_authenticated/settings'
@@ -19,6 +20,12 @@ import { Route as AuthenticatedHistoryImport } from './routes/_authenticated/his
 import { Route as AuthenticatedAddEarningsImport } from './routes/_authenticated/addEarnings'
 
 // Create/Update Routes
+
+const RegisterRoute = RegisterImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthenticatedRoute = AuthenticatedImport.update({
   id: '/_authenticated',
@@ -71,6 +78,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthenticatedImport
+      parentRoute: typeof rootRoute
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
     '/_authenticated/addEarnings': {
@@ -127,6 +141,7 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
+  '/register': typeof RegisterRoute
   '/addEarnings': typeof AuthenticatedAddEarningsRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/home': typeof AuthenticatedHomeRoute
@@ -136,6 +151,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
+  '/register': typeof RegisterRoute
   '/addEarnings': typeof AuthenticatedAddEarningsRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/home': typeof AuthenticatedHomeRoute
@@ -146,6 +162,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/register': typeof RegisterRoute
   '/_authenticated/addEarnings': typeof AuthenticatedAddEarningsRoute
   '/_authenticated/history': typeof AuthenticatedHistoryRoute
   '/_authenticated/home': typeof AuthenticatedHomeRoute
@@ -154,13 +171,28 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/addEarnings' | '/history' | '/home' | '/settings'
+  fullPaths:
+    | '/'
+    | ''
+    | '/register'
+    | '/addEarnings'
+    | '/history'
+    | '/home'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/addEarnings' | '/history' | '/home' | '/settings'
+  to:
+    | '/'
+    | ''
+    | '/register'
+    | '/addEarnings'
+    | '/history'
+    | '/home'
+    | '/settings'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/register'
     | '/_authenticated/addEarnings'
     | '/_authenticated/history'
     | '/_authenticated/home'
@@ -171,11 +203,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  RegisterRoute: typeof RegisterRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  RegisterRoute: RegisterRoute,
 }
 
 export const routeTree = rootRoute
@@ -189,7 +223,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_authenticated"
+        "/_authenticated",
+        "/register"
       ]
     },
     "/": {
@@ -203,6 +238,9 @@ export const routeTree = rootRoute
         "/_authenticated/home",
         "/_authenticated/settings"
       ]
+    },
+    "/register": {
+      "filePath": "register.tsx"
     },
     "/_authenticated/addEarnings": {
       "filePath": "_authenticated/addEarnings.tsx",

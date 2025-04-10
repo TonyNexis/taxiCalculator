@@ -1,16 +1,18 @@
+import GoogleIcon from '@mui/icons-material/Google'
 import Button from '@mui/material/Button'
-import { createFileRoute, useNavigate, redirect } from '@tanstack/react-router'
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import TextInput from '../components/TextInput'
-import { login } from '../firebase/authService'
+import { login, loginWithGoogle } from '../firebase/authService'
 import { auth } from '../firebase/firebase'
+import { Link } from '@tanstack/react-router'
 import styles from './../styles/index.module.scss'
 
 export const Route = createFileRoute('/')({
 	beforeLoad: () =>
-		new Promise((resolve) => {
-			const unsubscribe = auth.onAuthStateChanged((user) => {
+		new Promise(resolve => {
+			const unsubscribe = auth.onAuthStateChanged(user => {
 				unsubscribe()
 				if (user) {
 					resolve(redirect({ to: '/home' }))
@@ -44,12 +46,23 @@ function RouteComponent() {
 			const loggedUser = await login(data.email, data.password)
 			if (loggedUser) {
 				navigate({ to: '/home' })
-				console.log('success') 
+				console.log('success')
 			} else {
 				setError('Щось пішло не так. Спробуйте ще раз.')
 			}
 		} catch {
 			setError('Невірний email або пароль')
+		}
+	}
+
+	const handleGoogleLogin = async () => {
+		try {
+			const user = await loginWithGoogle()
+			if (user) {
+				navigate({ to: '/home' })
+			}
+		} catch (error) {
+			console.error(error)
 		}
 	}
 
@@ -95,6 +108,18 @@ function RouteComponent() {
 				</Button>
 				{error && <span className={styles.errorMessage}>{error}</span>}
 			</form>
+			<Button
+				variant='contained'
+				className={styles.googleButton}
+				onClick={handleGoogleLogin}
+			>
+				<GoogleIcon />
+				Увійти через Google
+			</Button>
+			<div className={styles.authRedirect}>
+				<span>Ще не маєш акаунта?</span>
+				<Link to='/register' title='Зареєструватися'>Зареєструватися </Link>
+			</div>
 		</div>
 	)
 }
