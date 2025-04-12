@@ -14,9 +14,9 @@ const Menu = () => {
 					Головна
 				</Link>
 				<Link
-					to='/history'
+					to='/statistics'
 					className={styles.menu__item}
-					title='Дізнатися історію'
+					title='Дізнатися статистику'
 				>
 					Історія
 				</Link>

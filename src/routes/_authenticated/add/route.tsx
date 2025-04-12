@@ -2,12 +2,11 @@ import Button from '@mui/material/Button'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import TextInput from '../../components/TextInput'
-import useEarningsStore from '../../store/useEarningsStore'
-import styles from './../../styles/addEarningsPage.module.scss'
-import './../../styles/global.scss'
+import TextInput from '../../../components/TextInput.tsx'
+import useEarningsStore from '../../../store/useEarningsStore.ts'
+import styles from './addEarningsPage.module.scss'
 
-export const Route = createFileRoute("/_authenticated/addEarnings")({
+export const Route = createFileRoute("/_authenticated/add")({
   component: RouteComponent,
 })
 

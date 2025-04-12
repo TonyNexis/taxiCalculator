@@ -11,54 +11,57 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as RegisterImport } from './routes/register'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
-import { Route as IndexImport } from './routes/index'
-import { Route as AuthenticatedSettingsImport } from './routes/_authenticated/settings'
-import { Route as AuthenticatedHomeImport } from './routes/_authenticated/home'
-import { Route as AuthenticatedHistoryImport } from './routes/_authenticated/history'
-import { Route as AuthenticatedAddEarningsImport } from './routes/_authenticated/addEarnings'
+import { Route as RegisterRouteImport } from './routes/register/route'
+import { Route as IndexRouteImport } from './routes/index/route'
+import { Route as AuthenticatedStatisticsRouteImport } from './routes/_authenticated/statistics/route'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings/route'
+import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home/route'
+import { Route as AuthenticatedAddRouteImport } from './routes/_authenticated/add/route'
 
 // Create/Update Routes
-
-const RegisterRoute = RegisterImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const AuthenticatedRoute = AuthenticatedImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const RegisterRouteRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRouteRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedSettingsRoute = AuthenticatedSettingsImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedStatisticsRouteRoute =
+  AuthenticatedStatisticsRouteImport.update({
+    id: '/statistics',
+    path: '/statistics',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
-const AuthenticatedHomeRoute = AuthenticatedHomeImport.update({
+const AuthenticatedSettingsRouteRoute = AuthenticatedSettingsRouteImport.update(
+  {
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any,
+)
+
+const AuthenticatedHomeRouteRoute = AuthenticatedHomeRouteImport.update({
   id: '/home',
   path: '/home',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const AuthenticatedHistoryRoute = AuthenticatedHistoryImport.update({
-  id: '/history',
-  path: '/history',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-
-const AuthenticatedAddEarningsRoute = AuthenticatedAddEarningsImport.update({
-  id: '/addEarnings',
-  path: '/addEarnings',
+const AuthenticatedAddRouteRoute = AuthenticatedAddRouteImport.update({
+  id: '/add',
+  path: '/add',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
@@ -70,7 +73,14 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRoute
     }
     '/_authenticated': {
@@ -80,39 +90,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterImport
-      parentRoute: typeof rootRoute
-    }
-    '/_authenticated/addEarnings': {
-      id: '/_authenticated/addEarnings'
-      path: '/addEarnings'
-      fullPath: '/addEarnings'
-      preLoaderRoute: typeof AuthenticatedAddEarningsImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/history': {
-      id: '/_authenticated/history'
-      path: '/history'
-      fullPath: '/history'
-      preLoaderRoute: typeof AuthenticatedHistoryImport
+    '/_authenticated/add': {
+      id: '/_authenticated/add'
+      path: '/add'
+      fullPath: '/add'
+      preLoaderRoute: typeof AuthenticatedAddRouteImport
       parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/home': {
       id: '/_authenticated/home'
       path: '/home'
       fullPath: '/home'
-      preLoaderRoute: typeof AuthenticatedHomeImport
+      preLoaderRoute: typeof AuthenticatedHomeRouteImport
       parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsImport
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/statistics': {
+      id: '/_authenticated/statistics'
+      path: '/statistics'
+      fullPath: '/statistics'
+      preLoaderRoute: typeof AuthenticatedStatisticsRouteImport
       parentRoute: typeof AuthenticatedImport
     }
   }
@@ -121,17 +124,17 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedAddEarningsRoute: typeof AuthenticatedAddEarningsRoute
-  AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
-  AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedAddRouteRoute: typeof AuthenticatedAddRouteRoute
+  AuthenticatedHomeRouteRoute: typeof AuthenticatedHomeRouteRoute
+  AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRoute
+  AuthenticatedStatisticsRouteRoute: typeof AuthenticatedStatisticsRouteRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedAddEarningsRoute: AuthenticatedAddEarningsRoute,
-  AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
-  AuthenticatedHomeRoute: AuthenticatedHomeRoute,
-  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedAddRouteRoute: AuthenticatedAddRouteRoute,
+  AuthenticatedHomeRouteRoute: AuthenticatedHomeRouteRoute,
+  AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRoute,
+  AuthenticatedStatisticsRouteRoute: AuthenticatedStatisticsRouteRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -139,77 +142,70 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 )
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof IndexRouteRoute
+  '/register': typeof RegisterRouteRoute
   '': typeof AuthenticatedRouteWithChildren
-  '/register': typeof RegisterRoute
-  '/addEarnings': typeof AuthenticatedAddEarningsRoute
-  '/history': typeof AuthenticatedHistoryRoute
-  '/home': typeof AuthenticatedHomeRoute
-  '/settings': typeof AuthenticatedSettingsRoute
+  '/add': typeof AuthenticatedAddRouteRoute
+  '/home': typeof AuthenticatedHomeRouteRoute
+  '/settings': typeof AuthenticatedSettingsRouteRoute
+  '/statistics': typeof AuthenticatedStatisticsRouteRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof IndexRouteRoute
+  '/register': typeof RegisterRouteRoute
   '': typeof AuthenticatedRouteWithChildren
-  '/register': typeof RegisterRoute
-  '/addEarnings': typeof AuthenticatedAddEarningsRoute
-  '/history': typeof AuthenticatedHistoryRoute
-  '/home': typeof AuthenticatedHomeRoute
-  '/settings': typeof AuthenticatedSettingsRoute
+  '/add': typeof AuthenticatedAddRouteRoute
+  '/home': typeof AuthenticatedHomeRouteRoute
+  '/settings': typeof AuthenticatedSettingsRouteRoute
+  '/statistics': typeof AuthenticatedStatisticsRouteRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
+  '/': typeof IndexRouteRoute
+  '/register': typeof RegisterRouteRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/register': typeof RegisterRoute
-  '/_authenticated/addEarnings': typeof AuthenticatedAddEarningsRoute
-  '/_authenticated/history': typeof AuthenticatedHistoryRoute
-  '/_authenticated/home': typeof AuthenticatedHomeRoute
-  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/add': typeof AuthenticatedAddRouteRoute
+  '/_authenticated/home': typeof AuthenticatedHomeRouteRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRouteRoute
+  '/_authenticated/statistics': typeof AuthenticatedStatisticsRouteRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | ''
     | '/register'
-    | '/addEarnings'
-    | '/history'
+    | ''
+    | '/add'
     | '/home'
     | '/settings'
+    | '/statistics'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | ''
-    | '/register'
-    | '/addEarnings'
-    | '/history'
-    | '/home'
-    | '/settings'
+  to: '/' | '/register' | '' | '/add' | '/home' | '/settings' | '/statistics'
   id:
     | '__root__'
     | '/'
-    | '/_authenticated'
     | '/register'
-    | '/_authenticated/addEarnings'
-    | '/_authenticated/history'
+    | '/_authenticated'
+    | '/_authenticated/add'
     | '/_authenticated/home'
     | '/_authenticated/settings'
+    | '/_authenticated/statistics'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  IndexRouteRoute: typeof IndexRouteRoute
+  RegisterRouteRoute: typeof RegisterRouteRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  RegisterRoute: typeof RegisterRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  IndexRouteRoute: IndexRouteRoute,
+  RegisterRouteRoute: RegisterRouteRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  RegisterRoute: RegisterRoute,
 }
 
 export const routeTree = rootRoute
@@ -223,39 +219,39 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_authenticated",
-        "/register"
+        "/register",
+        "/_authenticated"
       ]
     },
     "/": {
-      "filePath": "index.tsx"
+      "filePath": "index/route.tsx"
+    },
+    "/register": {
+      "filePath": "register/route.tsx"
     },
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/addEarnings",
-        "/_authenticated/history",
+        "/_authenticated/add",
         "/_authenticated/home",
-        "/_authenticated/settings"
+        "/_authenticated/settings",
+        "/_authenticated/statistics"
       ]
     },
-    "/register": {
-      "filePath": "register.tsx"
-    },
-    "/_authenticated/addEarnings": {
-      "filePath": "_authenticated/addEarnings.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/history": {
-      "filePath": "_authenticated/history.tsx",
+    "/_authenticated/add": {
+      "filePath": "_authenticated/add/route.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/home": {
-      "filePath": "_authenticated/home.tsx",
+      "filePath": "_authenticated/home/route.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/settings": {
-      "filePath": "_authenticated/settings.tsx",
+      "filePath": "_authenticated/settings/route.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/statistics": {
+      "filePath": "_authenticated/statistics/route.tsx",
       "parent": "/_authenticated"
     }
   }
