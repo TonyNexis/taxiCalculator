@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import styles from './Menu.module.scss'
+import styles from './Navigation.module.scss'
 
 const Menu = () => {
 	return (
@@ -7,7 +7,7 @@ const Menu = () => {
 			<div className={styles.menu__items}>
 				{' '}
 				<Link
-					to='/'
+					to='/home'
 					className={styles.menu__item}
 					title='Перейти на головну сторінку'
 				>

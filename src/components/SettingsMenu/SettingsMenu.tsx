@@ -10,7 +10,6 @@ export const SettingsMenu = () => {
 	const navigate = useNavigate()
 	const isOpen = useMenuSettingsStore((state) => state.isOpen)
 	const toggleMenu = useMenuSettingsStore((state) => state.toggle)
-	const closeMenu = useMenuSettingsStore((state) => state.close)
 
 	const handleLogout = async () => {
 		try {
@@ -27,7 +26,7 @@ export const SettingsMenu = () => {
 				<button onClick={handleLogout} className={styles.menuIcon}>
 					<LogoutIcon className={styles.icon} />
 				</button>
-				<button onClick={() => closeMenu()} className={styles.menuIcon}>
+				<button className={styles.menuIcon}>
 					<Link to='/settings'>
 						<SettingsIcon className={styles.icon} />
 					</Link>

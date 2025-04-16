@@ -1,19 +1,16 @@
-import './styles/global.scss'
 import { ThemeProvider } from '@mui/material'
-import { theme } from './theme/theme.ts'
-import HomePage from './pages/Home/HomePage'
-import Menu from './components/Menu/Menu'
 import SettingsPage from './pages/SettingsInfo/SettingsPage'
+import './styles/global.scss'
+import { theme } from './theme/theme.ts'
 
 function App() {
-
-  return (
-    <ThemeProvider theme={theme}>
-    {/* <Menu/> */}
-    {/* <HomePage/> */}
-    <SettingsPage/>
-    </ThemeProvider>
-  )
+	return (
+		<ThemeProvider theme={theme}>
+			{/* <Menu/> */}
+			{/* <HomePage/> */}
+			<SettingsPage />
+		</ThemeProvider>
+	)
 }
 
 export default App
