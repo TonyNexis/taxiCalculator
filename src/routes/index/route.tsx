@@ -73,7 +73,7 @@ function RouteComponent() {
   return (
     <div className={styles.authPageWrapper}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.authForm}>
-        <h1>Login</h1>
+        <h1>Логін</h1>
         <div className={styles.fieldWrapper}>
           {' '}
           <TextInput
