@@ -19,6 +19,14 @@ export const themeOptions: ThemeOptions = {
 				},
 			},
 		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					width: '300px',
+					boxShadow: '0px 14px 20px rgba(0, 0, 0, 0.2)',
+				},
+			},
+		},
 		MuiButton: {
 			styleOverrides: {
 				root: {
