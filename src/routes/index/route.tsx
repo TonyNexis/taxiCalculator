@@ -1,4 +1,12 @@
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import GoogleIcon from '@mui/icons-material/Google'
+import {
+	FormControl,
+	IconButton,
+	InputAdornment,
+	InputLabel,
+	OutlinedInput,
+} from '@mui/material'
 import Button from '@mui/material/Button'
 import {
 	createFileRoute,
@@ -35,6 +43,7 @@ type Inputs = {
 
 function RouteComponent() {
 	const [error, setError] = useState('')
+	const [showPassword, setShowPassword] = useState(false)
 
 	const navigate = useNavigate()
 
@@ -69,6 +78,8 @@ function RouteComponent() {
 		}
 	}
 
+	const handleClickShowPassword = () => setShowPassword(show => !show)
+
 	return (
 		<div className={styles.authPageWrapper}>
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.authForm}>
@@ -91,15 +102,32 @@ function RouteComponent() {
 					)}
 				</div>
 				<div className={styles.fieldWrapper}>
-					{' '}
-					<TextInput
-						{...register('password', {
-							required: 'Вкажіть пароль',
-						})}
-						id='password'
-						type='password'
-						label='Пароль'
-					/>
+					<FormControl variant='outlined'>
+						<InputLabel htmlFor='outlined-adornment-password'>
+							Пароль
+						</InputLabel>
+						<OutlinedInput
+							{...register('password', {
+								required: 'Вкажіть пароль',
+							})}
+							id='password'
+							type={showPassword ? 'text' : 'password'}
+							endAdornment={
+								<InputAdornment position='end'>
+									<IconButton
+										aria-label={
+											showPassword ? 'Сховати пароль' : 'Показати пароль'
+										}
+										onClick={handleClickShowPassword}
+										edge='end'
+									>
+										{showPassword ? <VisibilityOff /> : <Visibility />}
+									</IconButton>
+								</InputAdornment>
+							}
+							label='Пароль'
+						/>
+					</FormControl>
 					{errors.password && (
 						<span className={styles.errorMessage}>
 							{errors.password.message}

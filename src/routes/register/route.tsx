@@ -7,10 +7,12 @@ import {
 	OutlinedInput,
 } from '@mui/material'
 import Button from '@mui/material/Button'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import TextInput from '../../components/TextInput'
+import { FirebaseError } from 'firebase/app'
+import { register as registerUser } from '../../firebase/authService'
 import styles from './../index/index.module.scss'
 
 export const Route = createFileRoute('/register')({
@@ -27,6 +29,8 @@ function RouteComponent() {
 	const [error, setError] = useState('')
 	const [showPassword, setShowPassword] = useState(false)
 
+	const navigate = useNavigate()
+
 	const {
 		register,
 		handleSubmit,
@@ -36,9 +40,27 @@ function RouteComponent() {
 
 	const handleClickShowPassword = () => setShowPassword(show => !show)
 
-	const onSubmit: SubmitHandler<Inputs> = (e: any) => {
-		e.preventDefault()
-		console.log('success')
+	const handleRegisterError = (error: unknown) => {
+		if (error instanceof FirebaseError) {
+			if (error.code === 'auth/email-already-in-use') {
+				setError('Користувач з таким email вже існує')
+				return
+			}
+		}
+
+		setError('Щось пішло не так. Спробуйте ще раз')
+	}
+
+	const onSubmit: SubmitHandler<Inputs> = async data => {
+		setError('')
+		try {
+			const registeredUser = await registerUser(data.email, data.password)
+			if (registeredUser) {
+				navigate({ to: '/' })
+			}
+		} catch (error) {
+			handleRegisterError(error)
+		}
 	}
 
 	return (
@@ -74,15 +96,13 @@ function RouteComponent() {
 									message: '6–15 символів, літери і цифри',
 								},
 							})}
-							id='outlined-adornment-password'
+							id='password'
 							type={showPassword ? 'text' : 'password'}
 							endAdornment={
 								<InputAdornment position='end'>
 									<IconButton
 										aria-label={
-											showPassword
-												? 'hide the password'
-												: 'display the password'
+											showPassword ? 'Сховати пароль' : 'Показати пароль'
 										}
 										onClick={handleClickShowPassword}
 										edge='end'
@@ -108,21 +128,16 @@ function RouteComponent() {
 						<OutlinedInput
 							{...register('confirmPassword', {
 								required: 'Вкажіть пароль',
-								validate: (value) => value === watch('password') || 'Паролі не співпадають',
-								pattern: {
-									value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/,
-									message: '6–15 символів, літери і цифри',
-								},
+								validate: value =>
+									value === watch('password') || 'Паролі не співпадають',
 							})}
-							id='outlined-adornment-password'
+							id='confirm-password'
 							type={showPassword ? 'text' : 'password'}
 							endAdornment={
 								<InputAdornment position='end'>
 									<IconButton
 										aria-label={
-											showPassword
-												? 'hide the password'
-												: 'display the password'
+											showPassword ? 'Сховати пароль' : 'Показати пароль'
 										}
 										onClick={handleClickShowPassword}
 										edge='end'
@@ -143,6 +158,7 @@ function RouteComponent() {
 				<Button type='submit' variant='contained'>
 					Зареєструватись
 				</Button>
+				{error && <span className={styles.errorMessage}>{error}</span>}
 			</form>
 			<div className={styles.authRedirect}>
 				<span>Вже зареєстровані?</span>
