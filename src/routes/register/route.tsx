@@ -20,6 +20,7 @@ export const Route = createFileRoute('/register')({
 type Inputs = {
 	email: string
 	password: string
+	confirmPassword: string
 }
 
 function RouteComponent() {
@@ -29,6 +30,7 @@ function RouteComponent() {
 	const {
 		register,
 		handleSubmit,
+		watch,
 		formState: { errors },
 	} = useForm<Inputs>()
 
@@ -65,6 +67,13 @@ function RouteComponent() {
 							Пароль
 						</InputLabel>
 						<OutlinedInput
+							{...register('password', {
+								required: 'Вкажіть пароль',
+								pattern: {
+									value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/,
+									message: '6–15 символів, літери і цифри',
+								},
+							})}
 							id='outlined-adornment-password'
 							type={showPassword ? 'text' : 'password'}
 							endAdornment={
@@ -92,18 +101,42 @@ function RouteComponent() {
 					)}
 				</div>
 				<div className={styles.fieldWrapper}>
-					{' '}
-					<TextInput
-						{...register('password', {
-							required: 'Вкажіть пароль',
-						})}
-						id='passwordCheck'
-						type={showPassword ? 'text' : 'password'}
-						label='Повторіть пароль'
-					/>
-					{errors.password && (
+					<FormControl variant='outlined'>
+						<InputLabel htmlFor='outlined-adornment-password'>
+							Повторіть пароль
+						</InputLabel>
+						<OutlinedInput
+							{...register('confirmPassword', {
+								required: 'Вкажіть пароль',
+								validate: (value) => value === watch('password') || 'Паролі не співпадають',
+								pattern: {
+									value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/,
+									message: '6–15 символів, літери і цифри',
+								},
+							})}
+							id='outlined-adornment-password'
+							type={showPassword ? 'text' : 'password'}
+							endAdornment={
+								<InputAdornment position='end'>
+									<IconButton
+										aria-label={
+											showPassword
+												? 'hide the password'
+												: 'display the password'
+										}
+										onClick={handleClickShowPassword}
+										edge='end'
+									>
+										{showPassword ? <VisibilityOff /> : <Visibility />}
+									</IconButton>
+								</InputAdornment>
+							}
+							label='Повторіть пароль'
+						/>
+					</FormControl>
+					{errors.confirmPassword && (
 						<span className={styles.errorMessage}>
-							{errors.password.message}
+							{errors.confirmPassword.message}
 						</span>
 					)}
 				</div>
