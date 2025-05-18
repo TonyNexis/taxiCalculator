@@ -21,7 +21,8 @@
 		align-items: center;
 		justify-content: center;
 		min-height: 60vh;
-	
+		position: relative;
+		
 		.fieldWrapper {
 			position: relative;
 			display: flex;
@@ -32,6 +33,12 @@
 				position: absolute;
 				bottom: -30px;
 			}
+		}
+
+		.errorSaveMesage{
+			color: red;
+			position: absolute;
+			bottom: 50px;
 		}
 	}
 	

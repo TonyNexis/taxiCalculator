@@ -1,6 +1,7 @@
 import { Outlet, createRootRoute, useRouterState } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { useEffect, useState } from 'react'
+import { useAuth } from '../hooks/useAuth'
 import Spinner from '../components/Spinner/Spinner'
 
 export const Route = createRootRoute({
@@ -11,6 +12,8 @@ function RootLayout() {
 	const { isLoading } = useRouterState()
 
 	const [showSpinner, setShowSpinner] = useState(false)
+
+	useAuth()
 
 	useEffect(() => {
 		let timeout: ReturnType<typeof setTimeout>
