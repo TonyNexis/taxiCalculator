@@ -20,16 +20,10 @@ export const getUserSettings = async (userId: string): Promise<Settings | null> 
 
 if (docSnap.exists()) {
 		const data = docSnap.data()
-		console.log(typeof data.fuelPrice)
-		if (
-			typeof data.fuelPrice === 'string' &&
-			typeof data.depreciation === 'string'
-		) {
 			return {
 				fuelPrice: data.fuelPrice,
 				depreciation: data.depreciation,
 			}
-		}
 	}
 	return null
 }

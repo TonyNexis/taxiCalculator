@@ -4,8 +4,8 @@ import { devtools } from 'zustand/middleware'
 import { getUserSettings } from '../firebase/userSettingsService'
 
 export type Settings = {
-	fuelPrice: string
-	depreciation: string
+	fuelPrice: number
+	depreciation: number
 }
 
 type Store = {
@@ -24,7 +24,6 @@ const useSettingsStore = create<Store>()(
 
 				const data = await getUserSettings(uid)
 				if (data) {
-					console.log(data)
 					set({ settings: data, isLoaded: true })
 				} else {
 					set({ settings: { fuelPrice: 0, depreciation: 0 }, isLoaded: true })

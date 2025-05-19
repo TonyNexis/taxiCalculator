@@ -14,8 +14,8 @@ export const Route = createFileRoute('/_authenticated/settings')({
 })
 
 type Inputs = {
-	fuelPrice: number
-	depreciation: number
+	fuelPrice: string
+	depreciation: string
 }
 
 function RouteComponent() {
@@ -33,13 +33,16 @@ function RouteComponent() {
 	if (!isLoaded || !settings) return <div>aaaaa</div>
 
 	const onSubmit: SubmitHandler<Inputs> = async data => {
+		const dataNum = {
+			depreciation: parseFloat(data.depreciation),
+			fuelPrice: parseFloat(data.fuelPrice)
+		}
 		const user = auth.currentUser
 		if (!user) return
-    console.log(data)
 		try {
 			setErrorSaveMessage(false)
-			await saveUserSettings(user.uid, data)
-			updateSettings(data)
+			await saveUserSettings(user.uid, dataNum)
+			updateSettings(dataNum)
 			navigate({ to: '/' })
 		} catch (error) {
 			setErrorSaveMessage(true)
@@ -93,6 +96,44 @@ function RouteComponent() {
 						label='Амортизація'
 						unitType='грн/км'
 					/>
+
+					{/* <Controller
+						name='depreciation'
+						control={control}
+						defaultValue=""
+						rules={{
+							required: 'Вкажіть амортизацію',
+							validate: value => !isNaN(parseFloat(value)) || 'Введіть коректне число',
+						}}
+						render={({ field }) => (
+							<TextInput
+							{...field}
+								id='depreciation'
+								label='Амортизація'
+								unitType='грн/км'
+							/>
+						)}
+					/> */}
+
+					{/* <FormControl variant='outlined'>
+						<InputLabel htmlFor='outlined-adornment-password'>
+							Амортизація
+						</InputLabel>
+						<OutlinedInput
+							{...register('depreciation', {
+								required: 'Вкажіть амортизацію',
+								pattern: {
+									value: /^[0-9]*\.?[0-9]+$/,
+								message: 'Введіть коректне число',
+								},
+							})}
+							id='depreciation'
+							type='text'
+							label='Амортизація'
+
+						/>
+					</FormControl> */}
+
 					{errors.depreciation && (
 						<span className={styles.errorMessage}>
 							{errors.depreciation.message}
